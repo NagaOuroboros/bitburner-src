@@ -77,6 +77,8 @@ export const RamCostConstants = {
   InfiltrationGetInfiltrations: 15,
 
   CycleTiming: 0,
+
+  PortAPI: 0,
 } as const;
 
 function SF4Cost(cost: number): () => number {
@@ -232,6 +234,19 @@ const cloud = {
   purchaseServer: 2.25,
   deleteServer: 2.25,
 } as const;
+
+// Port API
+const port = {
+  getHandle: RamCostConstants.PortAPI,
+  isEmpty: RamCostConstants.PortAPI,
+  isFull: RamCostConstants.PortAPI,
+  peek: RamCostConstants.PortAPI,
+  read: RamCostConstants.PortAPI,
+  write: RamCostConstants.PortAPI,
+  tryWrite: RamCostConstants.PortAPI,
+  nextWrite: RamCostConstants.PortAPI,
+  clear: RamCostConstants.PortAPI,
+};
 
 // Darknet API
 const dnet = {
@@ -549,6 +564,7 @@ export const RamCosts: RamCostTree<NSFull> = {
   singularity,
   format,
   cloud,
+  port,
   gang,
   go,
   dnet,

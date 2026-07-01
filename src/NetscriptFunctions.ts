@@ -117,7 +117,8 @@ import { exampleDarknetServerData, ResponseCodeEnum } from "./DarkNet/Enums";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Literatures } from "./Literature/Literatures";
 import { Messages } from "./Message/MessageHelpers";
-import { setDeprecatedProperties } from "./utils/DeprecationHelper";
+import { deprecationWarning, setDeprecatedProperties } from "./utils/DeprecationHelper";
+import { NetscriptPort } from "./NetscriptFunctions/Port";
 
 export const enums: NSEnums = {
   CityName,
@@ -164,6 +165,7 @@ export const ns: InternalAPI<NSFull> = {
   grafting: NetscriptGrafting(),
   hacknet: NetscriptHacknet(),
   cloud: NetscriptCloud(),
+  port: NetscriptPort(),
   sprintf:
     (ctx) =>
     (_format, ...args) => {
@@ -1066,6 +1068,7 @@ export const ns: InternalAPI<NSFull> = {
       return helpers.getRunningScript(ctx, ident) !== null;
     },
   writePort: (ctx) => (_portNumber, data) => {
+    deprecationWarning("writePort", "Use ns.port.write instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.write(data);
   },
@@ -1098,14 +1101,17 @@ export const ns: InternalAPI<NSFull> = {
     server.writeToTextFile(filepath, mode === "w" ? data : existingText + data);
   },
   tryWritePort: (ctx) => (_portNumber, data) => {
+    deprecationWarning("tryWritePort", "Use ns.port.tryWrite instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.tryWrite(data);
   },
   nextPortWrite: (ctx) => (_portNumber) => {
+    deprecationWarning("nextPortWrite", "Use ns.port.nextWrite instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.nextWrite();
   },
   readPort: (ctx) => (_portNumber) => {
+    deprecationWarning("readPort", "Use ns.port.read instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.read();
   },
@@ -1143,14 +1149,17 @@ export const ns: InternalAPI<NSFull> = {
     return contentFile.metadata.plain();
   },
   peek: (ctx) => (_portNumber) => {
+    deprecationWarning("peek", "Use ns.port.peek instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.peek();
   },
   isFullPort: (ctx) => (_portNumber) => {
+    deprecationWarning("isFullPort", "Use ns.port.isFull instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.full();
   },
   isEmptyPort: (ctx) => (_portNumber) => {
+    deprecationWarning("isEmptyPort", "Use ns.port.isEmpty instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.empty();
   },
@@ -1166,10 +1175,12 @@ export const ns: InternalAPI<NSFull> = {
     file.content = "";
   },
   clearPort: (ctx) => (_portNumber) => {
+    deprecationWarning("clearPort", "Use ns.port.clear instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle.clear();
   },
   getPortHandle: (ctx) => (_portNumber) => {
+    deprecationWarning("getPortHandle", "Use ns.port.getHandle instead.");
     const portHandle = helpers.portHandle(ctx, _portNumber);
     return portHandle;
   },
